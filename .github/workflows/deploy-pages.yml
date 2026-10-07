@@ -36,6 +36,11 @@ jobs:
       - name: Build static site
         run: npm run build
 
+      - name: Fix public asset paths for GitHub Pages
+        run: |
+          find out -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 | \
+            xargs -0 perl -pi -e 's{(?<!/vantage-cue-demo)/images/}{/vantage-cue-demo/images/}g'
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
