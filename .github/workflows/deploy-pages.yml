@@ -33,6 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Prepare public image paths
+        run: |
+          find app components data lib -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.css' \) -print0 | \
+            xargs -0 perl -pi -e 's{(?<!/vantage-cue-demo)/images/}{/vantage-cue-demo/images/}g'
+
       - name: Build static site
         run: npm run build
 
